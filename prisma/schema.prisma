@@ -1,0 +1,136 @@
+// Support Raising Manager — data model.
+// Local dev uses SQLite. To deploy on Postgres (e.g. Supabase, Neon, Railway),
+// change `provider` to "postgresql" and point DATABASE_URL at your database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  name             String    @default("")
+  phone            String?
+  role             String    @default("SUPPORTER") // SUPPORTER | ADMIN
+  status           String    @default("ACTIVE") // ACTIVE | PAUSED | UNSUBSCRIBED
+  // How they want to be reached
+  emailUpdates     Boolean   @default(true)
+  smsUpdates       Boolean   @default(false)
+  signalMember     Boolean   @default(false)
+  preferredChannel String    @default("EMAIL") // EMAIL | SMS | SIGNAL
+  // Relationship management
+  address          String?
+  source           String? // how you know them: church, family, college...
+  tags             String    @default("") // comma separated
+  notes            String    @default("")
+  lastContactedAt  DateTime?
+  stripeCustomerId String?   @unique
+  unsubscribeToken String    @unique @default(cuid())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  pledges    Pledge[]
+  gifts      Gift[]
+  sessions   Session[]
+  deliveries Delivery[]
+}
+
+model Pledge {
+  id                   String    @id @default(cuid())
+  userId               String
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amountCents          Int
+  interval             String    @default("MONTHLY") // MONTHLY | QUARTERLY | ANNUAL | ONE_TIME
+  method               String    @default("STRIPE") // STRIPE | CHECK | BANK | ZELLE | OTHER
+  status               String    @default("ACTIVE") // PENDING | ACTIVE | PAUSED | CANCELED
+  stripeSubscriptionId String?   @unique
+  startedAt            DateTime  @default(now())
+  canceledAt           DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+}
+
+model Gift {
+  id              String   @id @default(cuid())
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  amountCents     Int
+  receivedAt      DateTime @default(now())
+  method          String   @default("STRIPE")
+  note            String   @default("")
+  stripePaymentId String?  @unique
+  createdAt       DateTime @default(now())
+}
+
+model LoginToken {
+  id        String    @id @default(cuid())
+  email     String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([email])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Update {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  weekOf      DateTime
+  summary     String    @default("")
+  body        String    @default("")
+  visibility  String    @default("SUPPORTERS") // PUBLIC | SUPPORTERS
+  status      String    @default("DRAFT") // DRAFT | PUBLISHED
+  coverPhotoId String?
+  publishedAt DateTime?
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  photos     Photo[]
+  deliveries Delivery[]
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  fileName  String   @unique
+  caption   String   @default("")
+  mimeType  String
+  updateId  String?
+  update    Update?  @relation(fields: [updateId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+}
+
+model Delivery {
+  id        String   @id @default(cuid())
+  updateId  String?
+  update    Update?  @relation(fields: [updateId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  channel   String // EMAIL | SMS
+  to        String
+  subject   String   @default("")
+  status    String // SENT | LOGGED | FAILED
+  error     String?
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
