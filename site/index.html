@@ -1,0 +1,171 @@
+<!doctype html>
+<!--
+  Public site for GitHub Pages.
+  Edit the text below directly on GitHub (click the pencil icon on this file) —
+  it republishes automatically in about a minute.
+  Once the full app is hosted (Railway/Render), point the "Give" buttons at
+  https://YOUR-APP-DOMAIN/give so supporters can create accounts and give online.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Kovalenkos on Mission</title>
+  <meta name="description" content="Serving together, sent by you.">
+  <meta name="theme-color" content="#1f4d3a">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root {
+      --ink: #1d2320; --muted: #5f6763; --cream: #f7f4ee; --sand: #ece5d8; --line: #ddd5c6;
+      --brand: #1f4d3a; --brand-dark: #153628; --brand-soft: #e3ece6; --accent: #c4703f;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 640px) { .wrap { padding: 0 24px; } }
+
+    header { position: sticky; top: 0; z-index: 10; background: rgba(247,244,238,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
+    .logo { font-family: var(--serif); font-weight: 600; color: var(--brand); text-decoration: none; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    nav { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
+    nav a { text-decoration: none; font-size: .9rem; font-weight: 600; color: var(--muted); padding: 8px 12px; border-radius: 10px; }
+    nav a:hover { background: var(--sand); color: var(--ink); }
+    .hide-sm { display: none; }
+    @media (min-width: 640px) { .hide-sm { display: inline-block; } }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 12px 22px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+    .btn-primary, nav a.btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover, nav a.btn-primary:hover { background: var(--brand-dark); color: #fff; }
+    .btn-secondary { background: #fff; border-color: var(--line); color: var(--ink); }
+    .btn-secondary:hover { background: var(--sand); }
+    nav a.btn-primary { padding: 8px 14px; }
+
+    .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); margin: 0 0 12px; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; margin: 0; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); letter-spacing: -.01em; margin-bottom: 20px; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2rem); margin-bottom: 28px; }
+    .lead { font-size: 1.15rem; color: var(--muted); max-width: 36rem; margin: 0 0 32px; }
+    section { padding: 64px 0; }
+
+    .hero { display: grid; gap: 40px; align-items: center; padding-top: 56px; padding-bottom: 72px; }
+    @media (min-width: 900px) { .hero { grid-template-columns: 1fr 1fr; } }
+    .hero-photo { aspect-ratio: 4/3; border-radius: 24px; background: var(--sand); overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--muted); text-align: center; padding: 24px; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .band { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .two { display: grid; gap: 40px; }
+    @media (min-width: 768px) { .two { grid-template-columns: 1fr 1fr; } }
+    .statement { font-family: var(--serif); font-size: 1.5rem; line-height: 1.4; margin: 0; }
+
+    .cards { display: grid; gap: 20px; }
+    @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+    .card h3 { font-size: 1.25rem; margin: 12px 0 8px; }
+    .card p { margin: 0; color: var(--muted); }
+    .num { width: 36px; height: 36px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+    .family { background: rgba(236,229,216,.6); }
+    .family p { font-size: 1.15rem; max-width: 46rem; margin: 0; white-space: pre-line; }
+
+    .give { text-align: center; max-width: 720px; margin: 0 auto; }
+    .give p { color: var(--muted); max-width: 32rem; margin: 0 auto 24px; }
+    .give h2 { margin-bottom: 16px; }
+    .ways { text-align: left; background: rgba(236,229,216,.5); border-radius: 14px; padding: 20px; margin: 24px 0 0; }
+    .ways h3 { font-family: var(--sans); font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .ways p { margin: 0; max-width: none; white-space: pre-line; font-size: .95rem; }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0 40px; color: var(--muted); font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a href="#" class="logo">The Kovalenkos on Mission</a>
+      <nav>
+        <a href="#about" class="hide-sm">About</a>
+        <a href="#focus" class="hide-sm">Our work</a>
+        <a href="#give" class="btn-primary">Give</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">Serving together, sent by you.</p>
+        <h1>The Kovalenkos on Mission</h1>
+        <p class="lead">We're a family following God's call. Your prayers and partnership make this work possible — thank you for being part of the team.</p>
+        <div class="actions">
+          <a href="#give" class="btn btn-primary">Become a monthly partner</a>
+          <a href="#about" class="btn btn-secondary">Our story</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <!-- Replace with: <img src="family.jpg" alt="Our family"> after uploading family.jpg into the site folder -->
+        <img src="icon-512.png" alt="" style="width:40%;height:auto;object-fit:contain">
+      </div>
+    </div>
+
+    <section id="about" class="band">
+      <div class="wrap two">
+        <div>
+          <p class="eyebrow">Our mission</p>
+          <p class="statement">Write your mission here: what you do, who you serve, and why it matters. Keep it to two or three sentences.</p>
+        </div>
+        <div>
+          <p class="eyebrow">Our vision</p>
+          <p class="statement">Write your vision here: the change you're praying and working toward over the next few years.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="focus">
+      <div class="wrap">
+        <p class="eyebrow">Where we're investing</p>
+        <h2>Focus areas</h2>
+        <div class="cards">
+          <div class="card"><div class="num">1</div><h3>Focus area one</h3><p>Describe the first area of work you're investing in.</p></div>
+          <div class="card"><div class="num">2</div><h3>Focus area two</h3><p>Describe the second area of work.</p></div>
+          <div class="card"><div class="num">3</div><h3>Focus area three</h3><p>Describe the third area of work.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="family">
+      <div class="wrap">
+        <p class="eyebrow">Meet the family</p>
+        <p>Introduce your family here — who you are, how you got here, and what a normal week looks like.</p>
+      </div>
+    </section>
+
+    <section id="give">
+      <div class="wrap">
+        <div class="card give">
+          <p class="eyebrow">Join the team</p>
+          <h2>Partner with us</h2>
+          <p>Monthly partners make long-term work possible. Every gift — large or small — keeps us here and serving.</p>
+          <!-- When the full app is live, change href to https://YOUR-APP-DOMAIN/give -->
+          <a href="#ways" class="btn btn-primary">Give now</a>
+          <div class="ways" id="ways">
+            <h3>How to give</h3>
+            <p>Add your giving instructions here — your sending organization's giving link, who to make checks payable to, a mailing address, or Zelle details.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© <span id="yr">2026</span> The Kovalenkos on Mission</div>
+  </footer>
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>
