@@ -13,6 +13,10 @@
   <title>The Kovalenkos on Mission</title>
   <meta name="description" content="Serving together, sent by you.">
   <meta name="theme-color" content="#1f4d3a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kovalenkos">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
@@ -166,6 +170,8 @@
   <footer>
     <div class="wrap">© <span id="yr">2026</span> The Kovalenkos on Mission</div>
   </footer>
-  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+    document.getElementById("yr").textContent = new Date().getFullYear();</script>
 </body>
 </html>
